@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Login from './container/login'
-import Register from './container/register'
 import AuthRoute from './component/authRoute'
+import Dashboard from './component/dashboard'
+import Register from './container/register'
+import Bossinfo from './container/bossinfo'
+import Geniusinfo from './container/geniusinfo'
 import reducers from './reducer'
 import './config'
 import './index.css'
@@ -23,8 +26,13 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <AuthRoute />
-        <Route path='/login' component={Login}></Route>
-        <Route path='/register' component={Register}></Route>
+        <Switch>
+          <Route path='/login' component={Login}></Route>
+          <Route path='/register' component={Register}></Route>
+          <Route path='/bossinfo' component={Bossinfo}></Route>
+          <Route path='/geniusinfo' component={Geniusinfo}></Route>
+          <Route component={Dashboard}></Route>
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>),
