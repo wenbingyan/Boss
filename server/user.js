@@ -8,8 +8,13 @@ const _filter = {pwd: 0, __v: 0}
 
 Router.get('/list', function(req, res){
   // User.remove({}, function(e, d){})
-  User.find({}, function(err, doc){
-    return res.json(doc)
+  const { type } = req.query
+  const seach = type ? {type} : {}
+  User.find(seach, _filter, function(err, doc){
+    if(err){
+      return res.json({code:1, msg: '服务器出错'})
+    }
+    return res.json({code:0, data:doc})
   })
 })
 

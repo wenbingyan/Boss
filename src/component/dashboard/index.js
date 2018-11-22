@@ -1,19 +1,14 @@
 import React from 'react'
 import { NavBar } from 'antd-mobile';
 import { connect } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
 import NavLinkBar from '@/component/navLinkBar'
+import Boss from '@/container/boss'
+import Genius from '@/container/genius'
+import UserPage from '@/container/userPage'
 
-function Boss(){
-  return <div>boss</div>
-}
-function Genius(){
-  return <div>Genius</div>
-}
 function Msg(){
   return <div>Msg</div>
-}
-function User(){
-  return <div>User</div>
 }
 
 @connect(
@@ -52,13 +47,19 @@ class Dashboard extends React.Component{
         text: '我',
         icon: 'user',
         title: '个人中心',
-        component: User,
+        component: UserPage,
       }
     ]
     return (
       <div>
         <NavBar className='fixd-header' mode='dard'>{navList.find(v=>v.path===pathname).title}</NavBar>
-        <h2>Dashboard</h2>
+        <div style={{marginTop:45}}>
+          <Switch>
+            {navList.map(v=>(
+              <Route key={v.path} path={v.path} component={v.component} ></Route>
+            ))}
+          </Switch>
+        </div>
         <NavLinkBar data={navList} ></NavLinkBar>
       </div>
     )

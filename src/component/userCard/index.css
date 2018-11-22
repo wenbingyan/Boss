@@ -1,0 +1,9 @@
+html:not([data-scale]) .am-list-body::before{
+  height: 0;
+}
+html:not([data-scale]) .am-list-body::after{
+  height: 0;
+}
+.detail{
+  padding-left: 20px;
+}
