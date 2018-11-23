@@ -4,44 +4,34 @@ import { InputItem, Button, WhiteSpace, WingBlank } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { login } from '@/redux/user'
 import { Redirect } from 'react-router-dom'
+import { inputHOC } from '@/component/inputHOC'
 
 @connect(
   state => state.user,
   {login}
 )
+@inputHOC
 class Login extends React.Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      user: '',
-      pwd: ''
-    }
-  }
   goResgister = ()=>{
     this.props.history.push('register')
   }
   handLogin = ()=>{
-    this.props.login(this.state)
-  }
-  handleChange(name,v){
-    this.setState({
-      [name]: v
-    })
+    this.props.login(this.props.state)
   }
   render(){
     return (
       <div>
-        { this.props.redirectTo ? <Redirect to = {this.props.redirectTo} /> : null }
+        { (this.props.redirectTo && this.props.redirectTo !=='/login') ? <Redirect to = {this.props.redirectTo} /> : null }
         <Logo></Logo>
         <WingBlank>
           { this.props.msg ? <p className='error_msg'>{this.props.msg}</p> : null }
           <InputItem
-            onChange = {v=>this.handleChange('user',v)}
+            onChange = {v=>this.props.handleChange('user',v)}
           >账号</InputItem>
           <WhiteSpace />
           <InputItem
             type = 'password'
-            onChange = {v=>this.handleChange('pwd',v)}
+            onChange = {v=>this.props.handleChange('pwd',v)}
           >密码</InputItem>
           <WhiteSpace />
           <Button type="primary"
