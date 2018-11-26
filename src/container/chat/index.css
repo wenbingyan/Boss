@@ -1,0 +1,12 @@
+#chat-page{
+	touch-action: none;
+}
+.am-grid .am-flexbox .am-flexbox-item .am-grid-item-content .am-grid-item-inner-content .am-grid-text{
+  font-size: 19px;
+}
+html:not([data-scale]) .am-grid.am-grid-line .am-flexbox .am-flexbox-item:not(:last-child)::after{
+  width: 0;
+}
+html:not([data-scale]) .am-grid.am-grid-line .am-flexbox::after{
+  height: 0;
+}
