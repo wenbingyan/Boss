@@ -8,13 +8,23 @@ const Chat = model.getModel('chat')
 const _filter = {pwd: 0, __v: 0}
 
 Router.get('/getmsglist', function(req, res){
-  const {user} = req.cookies
-  console.log(user)
-  Chat.find({}, function(err,doc){
-    if (!err) {
-      return res.json({code: 0, data: doc})
-    }
+  const {userid} = req.cookies
+  User.find({}, function(err, userdoc){
+    let users = {}
+    userdoc.forEach(v=>{
+      users[v._id] = {name: v.user, avatar: v.avatar}
+    })
+    Chat.find({'$or': [{from: userid}, {to: userid}]}, function(err,doc){
+      if (!err) {
+        return res.json({code: 0, msgs: doc, users: users})
+      }
+    })
   })
+})
+
+Router.get('/delete', function(req,res){
+  Chat.remove({}, function(e, d){})
+  return res.json({code:0})
 })
 
 Router.get('/list', function(req, res){

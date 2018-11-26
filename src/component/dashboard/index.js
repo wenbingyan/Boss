@@ -6,15 +6,25 @@ import NavLinkBar from '@/component/navLinkBar'
 import Boss from '@/container/boss'
 import Genius from '@/container/genius'
 import UserPage from '@/container/userPage'
+import { getMsgList, recvMsg } from '@/redux/chat'
+import Axios from 'axios';
 
 function Msg(){
   return <div>Msg</div>
 }
 
 @connect(
-  state=>state
+  state=>state,
+  {getMsgList, recvMsg}
 )
 class Dashboard extends React.Component{
+  componentDidMount(){
+    if(!this.props.chat.chatmsg.length) {
+      console.log(1)
+      this.props.getMsgList()
+      this.props.recvMsg()
+    } 
+  }
   render(){
     const {pathname} = this.props.location
     const user = this.props.user
@@ -54,6 +64,12 @@ class Dashboard extends React.Component{
       <div>
         <NavBar className='fixd-header' mode='dard'>{navList.find(v=>v.path===pathname).title}</NavBar>
         <div style={{marginTop:45,paddingBottom: 60}}>
+        <button onClick={()=>{
+          Axios.get('/user/delete')
+          .then(res=>{
+            console.log(res)
+          })
+        }}>121232133</button>
           <Switch>
             {navList.map(v=>(
               <Route key={v.path} path={v.path} component={v.component} ></Route>

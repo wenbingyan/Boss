@@ -8,3 +8,7 @@ export function getRedirectPath({type, avatar}){
 	}
 	return url
 }
+
+export function getChatID(from, to){
+	return [from, to].sort().join('_')
+}

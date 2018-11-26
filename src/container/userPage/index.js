@@ -25,7 +25,8 @@ class UserPage extends React.Component{
     const props = this.props
     const Item = List.Item
     const Brief = Item.Brief
-    return props.user?(
+    console.log(props)
+    return this.props.user?(
       <div>
         <Result
           title = {props.user}
@@ -45,7 +46,7 @@ class UserPage extends React.Component{
           <Item onClick={this.logout}>退出登录</Item>
         </List>
       </div>
-    ): <Redirect to={this.props.redirectTo} />
+    ): (this.props.redirectTo?<Redirect to={this.props.redirectTo}/>:null) 
   }
 }
 
