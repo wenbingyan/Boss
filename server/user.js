@@ -7,6 +7,23 @@ const Chat = model.getModel('chat')
 
 const _filter = {pwd: 0, __v: 0}
 
+Router.post('/readmsg', function(req, res){
+  const {userid} = req.cookies
+  const {from} = req.body
+  Chat.update(
+    {from,to: userid},
+    {'$set': {read: true}},
+    {'multi': true},
+    function(err, doc){
+      console.log(doc)
+      if(!err) {
+        return res.json({code: 0, num: doc.nModified})
+      }
+      return res.json({code: 1, msg: '更新失败'})
+    }
+  )
+})
+
 Router.get('/getmsglist', function(req, res){
   const {userid} = req.cookies
   User.find({}, function(err, userdoc){

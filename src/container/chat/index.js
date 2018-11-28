@@ -1,13 +1,13 @@
 import React from 'react'
 import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { sendMsg, getMsgList, recvMsg } from '@/redux/chat'
+import { sendMsg, getMsgList, recvMsg, getMsgRead } from '@/redux/chat'
 import { getChatID } from '@/util'
 import './index.css'
 
 @connect(
   state=>state,
-  { sendMsg, getMsgList, recvMsg }
+  { sendMsg, getMsgList, recvMsg, getMsgRead }
 )
 class Chat extends React.Component{
   constructor(props){
@@ -17,13 +17,16 @@ class Chat extends React.Component{
       showEmoji: false
     }
   }
-  componentDidMount(){
-    
+  componentDidMount(){ 
     if(!this.props.chat.chatmsg.length) {
       console.log(2)
       this.props.getMsgList()
       this.props.recvMsg()
     }
+  }
+  componentWillUnmount(){
+    const fromname = this.props.match.params.user
+    this.props.getMsgRead(fromname)
   }
   fixCarousel(){
 		setTimeout(function(){
@@ -34,7 +37,7 @@ class Chat extends React.Component{
     const from = this.props.user._id
     const to = this.props.match.params.user
     const content = this.state.text
-    console.log({from, to})
+    console.log('11111')
     this.props.sendMsg({from, to, content})
     this.setState({text: ''})
   }
@@ -54,11 +57,12 @@ class Chat extends React.Component{
     return (
       <div id='chat-page'>
         <NavBar
+          className='fixd-header'
           mode='dark'
           icon={<Icon type="left" />}
           onLeftClick={() => this.props.history.goBack()}
         >{usersMap[user].name}</NavBar>
-        <div>
+        <div style={{marginTop:45, paddingBottom:44}}>
           {chatMsg.map(v=>{
             const avater = require(`@/img/${usersMap[v.from].avatar}.png`)
             return v.from === user ? (

@@ -6,12 +6,9 @@ import NavLinkBar from '@/component/navLinkBar'
 import Boss from '@/container/boss'
 import Genius from '@/container/genius'
 import UserPage from '@/container/userPage'
+import Msg from '@/container/msg'
 import { getMsgList, recvMsg } from '@/redux/chat'
 import Axios from 'axios';
-
-function Msg(){
-  return <div>Msg</div>
-}
 
 @connect(
   state=>state,
@@ -20,7 +17,7 @@ function Msg(){
 class Dashboard extends React.Component{
   componentDidMount(){
     if(!this.props.chat.chatmsg.length) {
-      console.log(1)
+      console.log(11111)
       this.props.getMsgList()
       this.props.recvMsg()
     } 

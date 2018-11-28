@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import { Result, WhiteSpace, List, Modal } from 'antd-mobile'
 import browserCookies  from 'browser-cookies'
 import { logout } from '@/redux/user'
+import { logoutlist } from '@/redux/chat'
 import { Redirect } from 'react-router-dom'
 
 @connect(
   state=>state.user,
-  { logout }
+  { logout, logoutlist }
 )
 class UserPage extends React.Component{
   logout = () => {
@@ -18,6 +19,7 @@ class UserPage extends React.Component{
         console.log('logout')
         browserCookies.erase('userid')
         this.props.logout()
+        this.props.logoutlist()
       }},
     ])
   }

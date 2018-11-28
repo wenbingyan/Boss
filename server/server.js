@@ -14,6 +14,7 @@ io.on('connection', function(socket){
     const { from, to, content} = data
     const chatid = [from, to].sort().join('_')
     Chat.create({chatid, from, to, content }, function(err, doc){
+      console.log('1000000')
       io.emit('recvmsg', doc)
     })
   })
