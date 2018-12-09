@@ -57,7 +57,6 @@ export function recvMsg(){
   return (dispatch, getState)=>{
     socket.removeAllListeners('recvmsg')
     socket.on('recvmsg', (data)=>{
-      console.log('recvmsg')
       const userid = getState().user._id
       dispatch(recvMSG(data, userid))
     })
@@ -67,7 +66,6 @@ export function recvMsg(){
 export function sendMsg(data){
   const { from, to, content} = data
   return dispatch=>{
-    console.log('sendMsg')
     socket.emit('sendMsg', { from, to, content})
   }
 }
@@ -85,6 +83,5 @@ export function getMsgList(){
 }
 
 export function logoutlist(){
-  socket.removeAllListeners('recvmsg')
   return { type: LOGOUT }
 }
